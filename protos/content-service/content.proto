@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package content;
+
+option go_package = "src/protos;contentpb";
+
+import "google/protobuf/timestamp.proto";
+
+service ContentService {
+  rpc GetContentById(GetContentByIdRequest) returns (GetContentByIdResponse);
+  rpc ListContent(ListContentRequest) returns (ListContentResponse);
+}
+
+// a content object has _id, title and description, along with createdAt and updatedAt timestamps
+message Content {
+  string _id = 1;
+  string title = 2;
+  string description = 3;
+  google.protobuf.Timestamp createdAt = 4;
+  google.protobuf.Timestamp updatedAt = 5;
+}
+
+message GetContentByIdRequest {
+  string id = 1; // The ID of the content to retrieve
+}
+
+message GetContentByIdResponse {
+  Content content = 1; // The content object retrieved by ID
+}
+
+// list takes no parameters and returns a list of content objects
+message ListContentRequest {
+}
+
+message ListContentResponse {
+  repeated Content contents = 1; // A list of content objects
+}
